@@ -65,3 +65,42 @@ A failed connection does not always mean a server is down. Firewalls, blocked po
 ## License
 
 No license has been specified yet.
+
+
+## Troubleshooting Tips
+
+### DNS Resolution Failed
+- Check that the hostname is spelled correctly.
+- Verify that DNS resolution is available on your network.
+- Try another known hostname to compare results.
+
+### Connection Timed Out
+- The destination may be unreachable or filtering traffic.
+- A firewall or network policy may be blocking the connection.
+- Check whether the selected TCP port is accessible.
+
+### Connection Failed
+- Verify that the hostname and port are correct.
+- The destination service may be unavailable.
+- A connection refusal can indicate that no service is accepting connections on that port.
+
+## Example Test Cases
+
+| Hostname | Port | What it tests |
+|---|---:|---|
+| example.com | 443 | DNS and HTTPS-port connectivity |
+| google.com | 443 | DNS and HTTPS-port connectivity |
+| localhost | 1 | A local connection attempt that may fail |
+
+Results depend on network conditions, DNS responses, and firewall policies.
+
+## Project Status
+
+The tool has been tested in GitHub Codespaces with successful DNS resolution and TCP connectivity checks.
+
+## Future Improvements
+
+- Add command-line arguments for hostnames and ports.
+- Export diagnostic results to a text file.
+- Add an option to test multiple hosts.
+- Improve the summary of common network errors.
