@@ -73,7 +73,7 @@ class TestNetworkTroubleshooter(unittest.TestCase):
         )
         self.assertIn("hostname only", printed_text)
 
-    @patch("builtins.input", side_effect=["example.com", "abc"])
+    @patch("builtins.input", side_effect=["example.com", "1", "abc"])
     @patch("builtins.print")
     def test_non_numeric_port_rejected(self, mock_print, mock_input):
         nt.main()
@@ -83,7 +83,7 @@ class TestNetworkTroubleshooter(unittest.TestCase):
         )
         self.assertIn("Port must be a number", printed_text)
 
-    @patch("builtins.input", side_effect=["example.com", "70000"])
+    @patch("builtins.input", side_effect=["example.com", "1", "70000"])
     @patch("builtins.print")
     def test_out_of_range_port_rejected(self, mock_print, mock_input):
         nt.main()
