@@ -79,19 +79,54 @@ def main():
         print("Please enter a hostname only, without a URL path.")
         return
 
-    port_text = input("Enter TCP port (default 443): ").strip()
+    print("\nChoose a test:")
+    print("1. Test a single TCP port")
+    print("2. Test multiple TCP ports")
 
-    try:
-        port = int(port_text) if port_text else 443
-    except ValueError:
-        print("Port must be a number.")
-        return
+    choice = input("Enter choice (1 or 2): ").strip()
 
-    if not 1 <= port <= 65535:
-        print("Port must be between 1 and 65535.")
-        return
+    if choice == "1":
+        port_text = input("Enter TCP port (default 443): ").strip()
 
-    troubleshoot(host, port)
+        try:
+            port = int(port_text) if port_text else 443
+        except ValueError:
+            print("Port must be a number.")
+            return
+
+        if not 1 <= port <= 65535:
+            print("Port must be between 1 and 65535.")
+            return
+
+        troubleshoot(host, port)
+
+    elif choice == "2":
+        ports_text = input(
+            "Enter ports separated by commas (e.g. 80,443): "
+        ).strip()
+
+        try:
+            ports = [int(item.strip()) for item in ports_text.split(",")]
+        except ValueError:
+            print("Ports must be numbers separated by commas.")
+            return
+
+        if not ports or any(not 1 <= port <= 65535 for port in ports):
+            print("Each port must be between 1 and 65535.")
+            return
+
+        if len(ports) > 20:
+            print("Please test no more than 20 ports at a time.")
+            return
+
+        if len(set(ports)) != len(ports):
+            print("Please do not enter duplicate ports.")
+            return
+
+        test_multiple_ports(host, ports)
+
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
 
 
 if __name__ == "__main__":
