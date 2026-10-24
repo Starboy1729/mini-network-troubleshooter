@@ -46,6 +46,32 @@ def troubleshoot(host, port):
     print("\nTroubleshooting complete.")
 
 
+def test_multiple_ports(host, ports):
+    """Test TCP connectivity to a selected list of ports."""
+    print("\nMultiple-Port Test")
+    print("-" * 30)
+    print(f"Host: {host}\n")
+
+    for port in ports:
+        start = time.perf_counter()
+
+        try:
+            with socket.create_connection((host, port), timeout=3):
+                elapsed = (time.perf_counter() - start) * 1000
+                print(
+                    f"[OPEN] Port {port}: connection successful "
+                    f"({elapsed:.2f} ms)"
+                )
+
+        except socket.timeout:
+            print(f"[TIMEOUT] Port {port}: connection timed out")
+
+        except OSError as error:
+            print(f"[CLOSED/UNREACHABLE] Port {port}: {error}")
+
+    print("\nMultiple-port test complete.")
+
+
 def main():
     host = input("Enter a hostname (e.g. example.com): ").strip()
 
